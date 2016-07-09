@@ -3,12 +3,12 @@
 #include <LWiFiServer.h>
 #include <LWiFiUdp.h>
 #include <BlynkSimpleLinkItONE.h>
-#define WIFI_AP "hello"
-#define WIFI_PWD "12345678"
+#define WIFI_AP "Sagnik"
+#define WIFI_PWD "galinumberfive"
 #define WIFI_AUTH LWIFI_WPA
 #define trig 6
 #define echo 7
-char auth[]= "e9dbd11e00c04b959aa140d57014c092";
+char auth[]= "d16e55ff5c224ca192dacec821221773";
 void segregate();
 void setup() {
   // put your setup code here, to run once:
@@ -22,12 +22,7 @@ void setup() {
   digitalWrite(10,HIGH);
    pinMode(11,OUTPUT);
   digitalWrite(11,HIGH);
- if(LWiFi.connectWEP(WIFI_AP, WIFI_PASSWORD) < 0)
-{
-  while(true)
-segregate();
-
-}
+ 
 }
 
 void loop() {
@@ -66,28 +61,32 @@ BLYNK_READ(0){
     Blynk.virtualWrite(3,water_level());
     Blynk.virtualWrite(1,analogRead(A0));
     Blynk.virtualWrite(0,analogRead(A0));
-    Blynk.virtualWrite(2,"Good");
     
      if(water_level()>=80)
     
     {
+      Blynk.email("saggieb12@gmail.com", "You tank is full", "Hey! your tank is full. Use it well.");
+      Blynk.tweet("I'm doing my bit to save water. I have just saved 20 litres.");
       if(analogRead(A0)<=400)
       {
          digitalWrite(8,LOW);
         delay(10000);
         digitalWrite(8,HIGH);
+        Blynk.virtualWrite(2,"Bad");
       }
       else if(analogRead(A0)<=600)
     {
       digitalWrite(10,LOW);
         delay(10000);
         digitalWrite(10,HIGH);
+        Blynk.virtualWrite(2,"Fair");
     }
       else 
     {
        digitalWrite(11,LOW);
         delay(10000);
         digitalWrite(11,HIGH);
+        Blynk.virtualWrite(2,"Good");
     }
         
     }
@@ -98,5 +97,4 @@ BLYNK_READ(0){
     
 
 }
-
 
